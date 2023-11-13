@@ -6,6 +6,7 @@ namespace TextGame
     {
         private static Character player;
         private static Inventory inventory = new Inventory();
+        private static Shop Shop = new Shop();
 
         static void Main()
         {
@@ -32,10 +33,11 @@ namespace TextGame
             Console.WriteLine();
             Console.WriteLine("1. 상태보기");
             Console.WriteLine("2. 인벤토리");
+            Console.WriteLine("3. 상점가기");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
-            int input = CheckValidInput(1, 2);
+            int input = CheckValidInput(1, 3);
             switch (input)
             {
                 case 1:
@@ -45,6 +47,11 @@ namespace TextGame
                 case 2:
                     DisplayInventory();
                     break;
+
+                case 3:
+                    ShopingItem();
+                    break;
+
             }
         }
 
@@ -91,6 +98,7 @@ namespace TextGame
         static void DisplaySetItem()
         {
             int itemNum = 1;
+            Console.Clear();
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine("[무기]");
             foreach (Weapon item in inventory.weapons)
@@ -117,8 +125,8 @@ namespace TextGame
             }
             Console.WriteLine("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
             Console.WriteLine("0. 나가기");
-            Console.WriteLine("1. 무기장착");
-            Console.WriteLine("2. 방어구장착");
+            Console.WriteLine("1. 무기 장착");
+            Console.WriteLine("2. 방어구 장착");
 
             int input = CheckValidInput(0, 2);
             switch (input)
@@ -131,16 +139,64 @@ namespace TextGame
                     int winput = CheckValidInput(1, inventory.weapons.Count);
                     player.weapon = inventory.weapons[winput-1];
                     Console.WriteLine("장착완료");
-                    DisplayInventory();
+                    DisplaySetItem();
                     break;
                 case 2:
                     Console.WriteLine("장착할 방어구의 번호를 입력하세요");
                     int ainput = CheckValidInput(1, inventory.armors.Count);
                     player.armor = inventory.armors[ainput-1];
                     Console.WriteLine("장착완료");
-                    DisplayInventory();
+                    DisplaySetItem();
                     break;
             }
+        }
+        static void ShopingItem()
+        {
+            Shop.DisplayShop();
+            int input = CheckValidInput(0, 2);
+            switch (input)
+            {
+                case 0:
+                    DisplayGameIntro();
+                    break;
+                case 1:
+                    Console.WriteLine("구매할 무기의 번호를 입력하세요");
+                    int winput = CheckValidInput(1, Shop.shopWeapons.Count);
+                    if(player.Gold >= Shop.shopWeapons[winput - 1].price)
+                    {
+                        inventory.weapons.Add(Shop.shopWeapons[winput - 1]);
+                        player.Gold -= Shop.shopWeapons[winput - 1].price;
+                        Shop.shopWeapons.RemoveAt(winput - 1);
+                                             
+                    }
+                    else
+                    {
+                        Console.WriteLine("Gold가 부족합니다.");     
+                        Console.ReadKey();
+
+                    }
+                    ShopingItem();
+                    break;
+                case 2:
+                    Console.WriteLine("구매할 방어구의 번호를 입력하세요");
+                    int ainput = CheckValidInput(1, inventory.armors.Count);
+                    if (player.Gold >= Shop.shopArmors[ainput - 1].price)
+                    {
+                        inventory.armors.Add(Shop.shopArmors[ainput - 1]);
+                        player.Gold -= Shop.shopArmors[ainput - 1].price;
+                        Shop.shopArmors.RemoveAt(ainput - 1);
+                        
+                    }
+                    else
+                    {
+                        Console.WriteLine("Gold가 부족합니다.");
+                        Console.ReadKey();
+                    }
+                    
+                    ShopingItem();
+                    break;
+            }
+
         }
 
         static int CheckValidInput(int min, int max)
@@ -169,7 +225,7 @@ namespace TextGame
         public int Atk { get; }
         public int Def { get; }
         public int Hp { get; }
-        public int Gold { get; }
+        public int Gold { get; set; }
         public Weapon weapon;
         public Armor armor;
 

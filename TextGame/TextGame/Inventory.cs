@@ -17,25 +17,27 @@ namespace TextGame
         public string name;
         public ItemType type;
         public string description;
+        public int price;
 
     }
     public class Weapon : Item
     {
         public int atk;
-        public Weapon(int _id, string _name, ItemType _type, int _atk, string _des)
+        public Weapon(int _id, string _name, ItemType _type, int _atk, string _des, int _price)
         {
             id = _id;
             name = _name;
             type = _type;
             atk = _atk;
             description = _des;
+            price = _price;
         }
     }
     public class Armor : Item
     {
         public int def;
         public int hp;
-        public Armor(int _id, string _name, ItemType _type, int _def, int _hp, string _des)
+        public Armor(int _id, string _name, ItemType _type, int _def, int _hp, string _des, int _price)
         {
             id = _id;
             name = _name;
@@ -43,6 +45,7 @@ namespace TextGame
             def = _def;
             hp = _hp;
             description = _des;
+            price = _price;
         }
     }
 
@@ -50,10 +53,10 @@ namespace TextGame
     {
         public List<Weapon> weapons = new List<Weapon>();
         public List<Armor> armors = new List<Armor>();
-        Weapon w1 = new Weapon(1, "롱소드", ItemType.Weapon, 5, "평범한 롱소드");
-        Weapon w2 = new Weapon(2,"목검", ItemType.Weapon, 1, "썩은 목검");
-        Armor a1 = new Armor(3,"사슬갑옷", ItemType.Armor, 2, 10, "사슬로 만든 갑옷");
-        Armor a2 = new Armor(4,"가죽옷", ItemType.Armor, 1, 5, "낡은 가죽옷");
+        Weapon w1 = new Weapon(1, "롱소드", ItemType.Weapon, 5, "평범한 롱소드" ,100);
+        Weapon w2 = new Weapon(2,"목검", ItemType.Weapon, 1, "썩은 목검",10);
+        Armor a1 = new Armor(3,"사슬갑옷", ItemType.Armor, 2, 10, "사슬로 만든 갑옷",100);
+        Armor a2 = new Armor(4,"가죽옷", ItemType.Armor, 1, 5, "낡은 가죽옷",10);
 
         public Inventory()
         {
