@@ -136,7 +136,7 @@ namespace TextGame
                 case 2:
                     Console.WriteLine("장착할 방어구의 번호를 입력하세요");
                     int ainput = CheckValidInput(1, inventory.armors.Count);
-                    player.armor = inventory.armors[ainput];
+                    player.armor = inventory.armors[ainput-1];
                     Console.WriteLine("장착완료");
                     DisplayInventory();
                     break;
