@@ -51,7 +51,7 @@ namespace TextGame
             Console.WriteLine("0. 나가기");
             Console.WriteLine("1. 무기 구매");
             Console.WriteLine("2. 방어구 구매");
-
+            
         }
     }
 }
